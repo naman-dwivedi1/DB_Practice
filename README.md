@@ -34,6 +34,8 @@ The result is ordered by image_id and includes image_id and weak_label (rounded 
 output screenshot
 
 <img width="1433" alt="image" src="https://github.com/naman-dwivedi1/DB_Practice/assets/174860133/9fc1c3c8-f44c-471f-935b-cb6a06b6ddbe">
+<img width="1440" alt="image" src="https://github.com/naman-dwivedi1/DB_Practice/assets/174860133/d7b5d220-eec7-4f9f-9ec2-495e2b686c1c">
+
 
 
 ER - diagram
