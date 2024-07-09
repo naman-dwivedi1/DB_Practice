@@ -9,13 +9,17 @@ This SQL query aims to select a subset of image predictions from the unlabeled_i
 Common Table Expressions (CTEs):
 
 posi: This CTE selects rows from unlabeled_image_predictions, assigns a row number (rno) based on descending order of score, and renames score as weak_label.
+
 nega: This CTE selects rows similarly to posi, but assigns row numbers based on ascending order of score.
 
 Main Query:
 
 The main query selects image_id and weak_label from the combined results of two subqueries (one from posi and one from nega):
+
 From posi, it selects rows where rno is divisible by 3 and less than or equal to 30,000.
+
 From nega, it selects rows where rno is divisible by 3 and less than or equal to 30,000.
+
 Union Operation:
 
 The UNION operation combines the results of the above two subqueries, ensuring unique rows (removes duplicates).
