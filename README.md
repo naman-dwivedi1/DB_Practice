@@ -4,13 +4,14 @@ SQL Question
 
 Solution
 
-This SQL query aims to select a subset of image predictions from the unlabeled_image_predictions table. Here's a concise breakdown of what each part of the query does:
+The SQL query aims to select a subset of image predictions from the unlabeled_image_predictions table. Here's a concise breakdown of what each part of the query does:
 
 Common Table Expressions (CTEs):
 
 posi: This CTE selects rows from unlabeled_image_predictions, assigns a row number (rno) based on descending order of score, and renames score as weak_label.
 
 nega: This CTE selects rows similarly to posi, but assigns row numbers based on ascending order of score.
+
 
 Main Query:
 
@@ -20,9 +21,11 @@ From posi, it selects rows where rno is divisible by 3 and less than or equal to
 
 From nega, it selects rows where rno is divisible by 3 and less than or equal to 30,000.
 
+
 Union Operation:
 
 The UNION operation combines the results of the above two subqueries, ensuring unique rows (removes duplicates).
+
 
 Final Output:
 The result is ordered by image_id and includes image_id and weak_label (rounded to the nearest whole number).
@@ -39,6 +42,5 @@ Question: Make the ER diagram for the following tables and relations
 
 <img width="677" alt="image" src="https://github.com/naman-dwivedi1/DB_Practice/assets/174860133/4832b6a5-0335-47c1-895d-620e785efe5f">
 
-
-
+Solution
 <img width="1440" alt="image" src="https://github.com/naman-dwivedi1/DB_Practice/assets/174860133/15884927-1fb3-46d2-be86-3439418b8355">
