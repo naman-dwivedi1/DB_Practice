@@ -7,7 +7,7 @@ with posi as(
   rno,image_id,score as weak_label from
   unlabeled_image_predictions
 )
-select image_id, weak_label from (
+select image_id, round(weak_label) from (
 select image_id, weak_label from posi where rno%3=0 and rno<=30000 
 union
 select image_id,weak_label from nega where rno%3=0 and rno<=30000) as all_samples order by image_id
