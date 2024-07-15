@@ -1,0 +1,57 @@
+WITH BookingsPerHotel AS (
+    SELECT
+        h.city_id,
+        h.id AS hotel_id,
+        COUNT(b.id) AS bookings_count
+    FROM
+        hotel h
+    LEFT JOIN
+        booking b ON h.id = b.hotel_id
+    GROUP BY
+        h.city_id, h.id
+),
+MaxBookingsPerCity AS (
+    SELECT
+        city_id,
+        MAX(bookings_count) AS max_bookings_count
+    FROM
+        BookingsPerHotel
+    GROUP BY
+        city_id
+),
+PopularHotels AS (
+    SELECT
+        bh.city_id,
+        bh.hotel_id,
+        h.photos ->> 0 AS hotel_photo
+    FROM
+        BookingsPerHotel bh
+    JOIN
+        MaxBookingsPerCity max_counts ON bh.city_id = max_counts.city_id
+    JOIN
+        hotel h ON bh.hotel_id = h.id
+    WHERE
+        bh.bookings_count = max_counts.max_bookings_count
+)
+SELECT
+    c.name AS city_name,
+    lb.last_booking_date,
+    ph.hotel_id,
+    ph.hotel_photo
+FROM
+    city c
+LEFT JOIN (
+    SELECT
+        h.city_id,
+        MAX(b.booking_date) AS last_booking_date
+    FROM
+        booking b
+    JOIN
+        hotel h ON b.hotel_id = h.id
+    GROUP BY
+        h.city_id
+) lb ON c.id = lb.city_id
+LEFT JOIN
+    PopularHotels ph ON c.id = ph.city_id
+ORDER BY
+    c.name;
